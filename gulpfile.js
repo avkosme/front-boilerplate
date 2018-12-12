@@ -4,8 +4,7 @@ const gulp = require('gulp'),
     less = require('gulp-less'),
     concat = require('gulp-concat'),
     rigger = require('gulp-rigger'),
-    browserSync = require('browser-sync'),
-    gulpCopy = require('gulp-copy');
+    browserSync = require('browser-sync');
 
 const SITE_DIR = 'dist',
     LESS_DIR = './src/less',
