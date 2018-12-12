@@ -68,9 +68,20 @@ gulp.task('watch', function () {
     gulp.watch(['*pug', './src/index.pug'], ['pug'])
 })
 
+/**
+ * copy-fonts
+ */
 gulp.task('copy-fonts', function () {
     gulp.src(['./src/fonts/*'])
     .pipe(gulp.dest('./dist/fonts/'));
 })
 
-gulp.task('default', ['js', 'browser-sync', 'copy-fonts', 'watch'])
+/**
+ * copy-fonts
+ */
+gulp.task('copy-img', function () {
+    gulp.src(['./src/img/*'])
+    .pipe(gulp.dest('./dist/img/'));
+})
+
+gulp.task('default', ['js', 'browser-sync', 'copy-fonts', 'copy-img', 'watch'])
