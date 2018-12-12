@@ -4,7 +4,8 @@ const gulp = require('gulp'),
     less = require('gulp-less'),
     concat = require('gulp-concat'),
     rigger = require('gulp-rigger'),
-    browserSync = require('browser-sync');
+    browserSync = require('browser-sync'),
+    gulpCopy = require('gulp-copy');
 
 const SITE_DIR = 'dist',
     LESS_DIR = './src/less',
@@ -68,4 +69,9 @@ gulp.task('watch', function () {
     gulp.watch(['*pug', './src/index.pug'], ['pug'])
 })
 
-gulp.task('default', ['js', 'browser-sync', 'watch'])
+gulp.task('copy-fonts', function () {
+    gulp.src(['./src/fonts/*'])
+    .pipe(gulp.dest('./dist/fonts/'));
+})
+
+gulp.task('default', ['js', 'browser-sync', 'copy-fonts', 'watch'])
