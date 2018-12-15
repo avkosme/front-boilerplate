@@ -4,12 +4,15 @@ const gulp = require('gulp'),
     less = require('gulp-less'),
     concat = require('gulp-concat'),
     rigger = require('gulp-rigger'),
-    browserSync = require('browser-sync');
+    browserSync = require('browser-sync'),
+    sass = require('gulp-sass');
 
 const SITE_DIR = 'dist',
     LESS_DIR = './src/less',
     CSS_DIR = './dist/css',
     JS_DIR = 'js';
+
+sass.compiler = require('node-sass');
 
 /**
  * pug compiler
@@ -23,6 +26,17 @@ gulp.task('pug', function () {
         .pipe(gulp.dest(SITE_DIR))
         .pipe(browserSync.reload({ stream: true }))
 })
+
+
+/**
+ * sass compiler
+ */
+gulp.task('sass', function () {
+    gulp.src('./src/sass/**.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest(CSS_DIR));
+});
+
 
 /**
  * less compiler
@@ -66,6 +80,7 @@ gulp.task('watch', function () {
     gulp.watch(LESS_DIR + '/index.less', ['less'])
     gulp.watch('./src/js/**', ['js'])
     gulp.watch(['*pug', './src/index.pug'], ['pug'])
+    gulp.watch('./src/sass/**.scss', ['sass'])
 })
 
 /**
@@ -73,7 +88,7 @@ gulp.task('watch', function () {
  */
 gulp.task('copy-fonts', function () {
     gulp.src(['./src/fonts/*'])
-    .pipe(gulp.dest('./dist/fonts/'));
+        .pipe(gulp.dest('./dist/fonts/'));
 })
 
 /**
@@ -81,7 +96,7 @@ gulp.task('copy-fonts', function () {
  */
 gulp.task('copy-img', function () {
     gulp.src(['./src/img/*'])
-    .pipe(gulp.dest('./dist/img/'));
+        .pipe(gulp.dest('./dist/img/'));
 })
 
 gulp.task('default', ['js', 'browser-sync', 'copy-fonts', 'copy-img', 'watch'])
